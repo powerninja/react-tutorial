@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-function App() {
+export const Board = () => {
   return (
     <>
       <div className="board-row">
@@ -21,6 +21,4 @@ function App() {
       </div>
     </>
   );
-}
-
-export default App;
+};
