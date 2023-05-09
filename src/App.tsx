@@ -7,16 +7,18 @@ type numValue = {
 
 //<Square value="1" />で関数を呼び出すとprops.valueとして値が渡される
 //そのため、{value}と記載し分割代入をおこなっている
-const Square = ({ value }: numValue) => {
-  const [status, setStatus] = useState<string>('');
+const Square = () => {
+  const [state, setState] = useState<string>('');
+  const [value, setValue] = useState<string>('');
   const [checkPlayer, setcheckPlayer] = useState<boolean>(false);
 
-  const aaa = (num: string) => {
+  const handleClick = () => {
+    setValue('❌');
     if (checkPlayer) {
-      setStatus('⭕️');
+      setState('⭕️');
       setPlayerFlag(false);
     } else {
-      setStatus('❌');
+      setState('❌');
       setPlayerFlag(true);
     }
   };
@@ -27,8 +29,8 @@ const Square = ({ value }: numValue) => {
   };
 
   return (
-    <button className="square" onClick={() => aaa(value)}>
-      {status}
+    <button className="square" onClick={() => handleClick()}>
+      {value}
     </button>
   );
 };
@@ -37,19 +39,19 @@ export const Board = () => {
   return (
     <>
       <div className="board-row">
-        <Square value="1" />
-        <Square value="2" />
-        <Square value="3" />
+        <Square />
+        <Square />
+        <Square />
       </div>
       <div className="board-row">
-        <Square value="4" />
-        <Square value="5" />
-        <Square value="6" />
+        <Square />
+        <Square />
+        <Square />
       </div>
       <div className="board-row">
-        <Square value="7" />
-        <Square value="8" />
-        <Square value="9" />
+        <Square />
+        <Square />
+        <Square />
       </div>
     </>
   );
