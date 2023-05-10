@@ -17,12 +17,19 @@ const Square = ({ value, onSquareClick }: numValue) => {
 };
 
 export const Board = () => {
+  const [xIsNext, setXIsNext] = useState<boolean>(true);
   const [squares, setSquares] = useState<any>(Array(9).fill(null));
 
   const handleClick = (num: number) => {
     const nextSquares = [...squares];
-    nextSquares[num] = '❌';
+    if (xIsNext) {
+      nextSquares[num] = '❌';
+    } else {
+      nextSquares[num] = '⭕️';
+    }
+
     setSquares(nextSquares);
+    setXIsNext(!xIsNext);
   };
   return (
     <>
