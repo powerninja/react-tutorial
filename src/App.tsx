@@ -21,6 +21,9 @@ export const Board = () => {
   const [squares, setSquares] = useState<any>(Array(9).fill(null));
 
   const handleClick = (num: number) => {
+    if (squares[num]) {
+      return;
+    }
     const nextSquares = [...squares];
     if (xIsNext) {
       nextSquares[num] = '❌';
