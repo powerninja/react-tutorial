@@ -16,7 +16,9 @@ const Square = ({ value, onSquareClick }: numValue) => {
   );
 };
 
+// マス目のチェックを行う
 const calculateWinner = (squares: (string | null)[]) => {
+  //勝ちパターンの記載
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
@@ -40,10 +42,16 @@ const calculateWinner = (squares: (string | null)[]) => {
   return null;
 };
 
+// マス目の描写
+// 順番にまるばつを置く
+// プレイヤーの判定
 export const Board = () => {
+  //ターンを管理
   const [xIsNext, setXIsNext] = useState<boolean>(true);
+  //マス目の管理
   const [squares, setSquares] = useState<(string | null)[]>(Array(9).fill(null));
 
+  //押下したマス目に⭕️や❌を反映させ、プレイヤーを入れ替える
   const handleClick = (num: number) => {
     if (squares[num] || calculateWinner(squares)) {
       return;
@@ -59,6 +67,7 @@ export const Board = () => {
     setXIsNext(!xIsNext);
   };
 
+  //勝者を判定する
   const winner = calculateWinner(squares);
   let status;
   if (winner) {
