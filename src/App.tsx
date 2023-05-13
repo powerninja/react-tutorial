@@ -29,7 +29,11 @@ const calculateWinner = (squares: any) => {
   ];
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
+    //1. aのマス目に値が入っているか確認
+    //2. aとbのマス目に入力されている値が一致していることを確認
+    //3. aとcのマス目に入力されている値が一致していることを確認
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      //4,5,7,8は、01236のどれかが埋まっていることが確定条件なので、未チェック
       return squares[a];
     }
   }
@@ -54,6 +58,7 @@ export const Board = () => {
     setSquares(nextSquares);
     setXIsNext(!xIsNext);
   };
+
   const winner = calculateWinner(squares);
   let status;
   if (winner) {
