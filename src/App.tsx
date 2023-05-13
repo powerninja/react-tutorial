@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 
 type numValue = {
-  value?: string;
+  value: string | null;
   onSquareClick: Function;
 };
 
@@ -16,7 +16,7 @@ const Square = ({ value, onSquareClick }: numValue) => {
   );
 };
 
-const calculateWinner = (squares: any) => {
+const calculateWinner = (squares: (string | null)[]) => {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
@@ -42,7 +42,7 @@ const calculateWinner = (squares: any) => {
 
 export const Board = () => {
   const [xIsNext, setXIsNext] = useState<boolean>(true);
-  const [squares, setSquares] = useState<any>(Array(9).fill(null));
+  const [squares, setSquares] = useState<(string | null)[]>(Array(9).fill(null));
 
   const handleClick = (num: number) => {
     if (squares[num] || calculateWinner(squares)) {
