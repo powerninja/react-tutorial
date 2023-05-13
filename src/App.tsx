@@ -42,6 +42,11 @@ const calculateWinner = (squares: (string | null)[]) => {
   return null;
 };
 
+//ランダムな数字を返却する関数
+const getRandomInt = (max: number) => {
+  return Math.floor(Math.random() * max);
+};
+
 // マス目の描写
 // 順番にまるばつを置く
 // プレイヤーの判定
@@ -50,6 +55,8 @@ export const Board = () => {
   const [xIsNext, setXIsNext] = useState<boolean>(true);
   //マス目の管理
   const [squares, setSquares] = useState<(string | null)[]>(Array(9).fill(null));
+  //
+  const [squareNum, setSquareNum] = useState<number | null>(null);
 
   //押下したマス目に⭕️や❌を反映させ、プレイヤーを入れ替える
   const handleClick = (num: number) => {
@@ -59,12 +66,19 @@ export const Board = () => {
     const nextSquares = [...squares];
     if (xIsNext) {
       nextSquares[num] = '❌';
+      setSquareNum(num);
+      const randomNum = getRandomInt(9);
+      if (!calculateWinner(squares)) {
+        nextSquares[randomNum] = '⭕️';
+      }
     } else {
-      nextSquares[num] = '⭕️';
+      // nextSquares[num] = '⭕️';
+      //TODO: ⭕️を自動で入力されるようにする
     }
 
+    console.log(squares);
     setSquares(nextSquares);
-    setXIsNext(!xIsNext);
+    // setXIsNext(!xIsNext);
   };
 
   //勝者を判定する
