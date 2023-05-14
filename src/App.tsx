@@ -66,15 +66,15 @@ export const Board = () => {
     const nextSquares = [...squares];
     if (xIsNext) {
       nextSquares[num] = '❌';
-      squareNum.push(num);
-      setSquareNum([...squareNum]);
+      // squareNum.push(num);
+      // setSquareNum([...squareNum]);
       // console.log(squareNum);
 
-      let randomNum = getRandomInt(9);
-      console.log(randomNum);
-      let indices = squares.map((item, index) => (item !== null ? index : null)).filter((index) => index !== null);
-      indices.push(num);
-      console.log(indices);
+      // let randomNum = getRandomInt(9);
+      // console.log(randomNum);
+      // let indices = squares.map((item, index) => (item !== null ? index : null)).filter((index) => index !== null);
+      // indices.push(num);
+      // console.log(indices);
       // for (let i = 0; i < 20; i++) {
       //   if (indices[i] !== randomNum) {
       //     //TODO: 今は上から検索し、一致した時点で終了しているが全て検索する必要がある
