@@ -6,6 +6,12 @@ type numValue = {
   onSquareClick: Function;
 };
 
+type boardType = {
+  xIsNext: boolean;
+  squares: (string | null)[];
+  onPlay: Function;
+};
+
 //<Square value="1" />で関数を呼び出すとprops.valueとして値が渡される
 //そのため、{value}と記載し分割代入をおこなっている
 const Square = ({ value, onSquareClick }: numValue) => {
@@ -42,15 +48,10 @@ const calculateWinner = (squares: (string | null)[]) => {
   return null;
 };
 
-//ランダムな数字を返却する関数
-const getRandomInt = (max: number) => {
-  return Math.floor(Math.random() * max);
-};
-
 // マス目の描写
 // 順番にまるばつを置く
 // プレイヤーの判定
-const Board = ({ xIsNext, squares, onPlay }: any) => {
+const Board = ({ xIsNext, squares, onPlay }: boardType) => {
   //押下したマス目に⭕️や❌を反映させ、プレイヤーを入れ替える
   const handleClick = (num: number) => {
     if (squares[num] || calculateWinner(squares)) {
@@ -99,14 +100,16 @@ const Board = ({ xIsNext, squares, onPlay }: any) => {
 export const Game = () => {
   //ターンを管理
   const [xIsNext, setXIsNext] = useState<boolean>(true);
-  //マス目の管理
-  const [squares, setSquares] = useState<(string | null)[]>(Array(9).fill(null));
+  //ターンごとのマス目を配列で保存
   const [history, setHistory] = useState([Array(9).fill(null)]);
 
+  //(マス目押下後の)現状のマス目を取得
+  //全てのターンのマス目を保存しているため、1ターンのマス目をuseStateを使用して保存する必要がない
   const currentSquares = history[history.length - 1];
-  console.log(currentSquares);
 
-  const handlePlay = (nextSquares: any) => {
+  //過去のマス目の末尾に、最新のマス目を追加し保存する
+  //プレイヤー変更を行う
+  const handlePlay = (nextSquares: (string | null)[]) => {
     setHistory([...history, nextSquares]);
     setXIsNext(!xIsNext);
   };
