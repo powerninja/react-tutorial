@@ -56,7 +56,7 @@ export const Board = () => {
   //マス目の管理
   const [squares, setSquares] = useState<(string | null)[]>(Array(9).fill(null));
   //
-  const [squareNum, setSquareNum] = useState<number | null>(null);
+  const [squareNum, setSquareNum] = useState<(number | null)[]>([]);
 
   //押下したマス目に⭕️や❌を反映させ、プレイヤーを入れ替える
   const handleClick = (num: number) => {
@@ -66,18 +66,42 @@ export const Board = () => {
     const nextSquares = [...squares];
     if (xIsNext) {
       nextSquares[num] = '❌';
-      setSquareNum(num);
-      const randomNum = getRandomInt(9);
+      squareNum.push(num);
+      setSquareNum([...squareNum]);
+      // console.log(squareNum);
+
+      let randomNum = getRandomInt(9);
+      console.log(randomNum);
+      let indices = squares.map((item, index) => (item !== null ? index : null)).filter((index) => index !== null);
+      indices.push(num);
+      console.log(indices);
+      for (let i = 0; i < 20; i++) {
+        if (indices[i] !== randomNum) {
+          //TODO: 今は上から検索し、一致した時点で終了しているが全て検索する必要がある
+          //ランダム値出す
+          //indices配列全体に重複する値がないことを確認する
+          //squareNumに0~8の配列を入れておく
+          //indicesに入っている値をunpushする
+          console.log(indices[i]);
+          break;
+        } else {
+          randomNum = getRandomInt(9);
+        }
+      }
+
       if (!calculateWinner(squares)) {
-        nextSquares[randomNum] = '⭕️';
+        setTimeout(() => {
+          nextSquares[randomNum] = '⭕️';
+          setSquares(nextSquares);
+        }, 100);
+        // nextSquares[randomNum] = '⭕️';
       }
     } else {
       // nextSquares[num] = '⭕️';
       //TODO: ⭕️を自動で入力されるようにする
     }
 
-    console.log(squares);
-    setSquares(nextSquares);
+    // setSquares(nextSquares);
     // setXIsNext(!xIsNext);
   };
 
