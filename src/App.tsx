@@ -75,34 +75,34 @@ export const Board = () => {
       let indices = squares.map((item, index) => (item !== null ? index : null)).filter((index) => index !== null);
       indices.push(num);
       console.log(indices);
-      for (let i = 0; i < 20; i++) {
-        if (indices[i] !== randomNum) {
-          //TODO: 今は上から検索し、一致した時点で終了しているが全て検索する必要がある
-          //ランダム値出す
-          //indices配列全体に重複する値がないことを確認する
-          //squareNumに0~8の配列を入れておく
-          //indicesに入っている値をunpushする
-          console.log(indices[i]);
-          break;
-        } else {
-          randomNum = getRandomInt(9);
-        }
-      }
+      // for (let i = 0; i < 20; i++) {
+      //   if (indices[i] !== randomNum) {
+      //     //TODO: 今は上から検索し、一致した時点で終了しているが全て検索する必要がある
+      //     //ランダム値出す
+      //     //indices配列全体に重複する値がないことを確認する
+      //     //squareNumに0~8の配列を入れておく
+      //     //indicesに入っている値をunpushする
+      //     console.log(indices[i]);
+      //     break;
+      //   } else {
+      //     randomNum = getRandomInt(9);
+      //   }
+      // }
 
-      if (!calculateWinner(squares)) {
-        setTimeout(() => {
-          nextSquares[randomNum] = '⭕️';
-          setSquares(nextSquares);
-        }, 100);
-        // nextSquares[randomNum] = '⭕️';
-      }
+      // if (!calculateWinner(squares)) {
+      //   setTimeout(() => {
+      //     nextSquares[randomNum] = '⭕️';
+      //     setSquares(nextSquares);
+      //   }, 100);
+      //   // nextSquares[randomNum] = '⭕️';
+      // }
     } else {
-      // nextSquares[num] = '⭕️';
+      nextSquares[num] = '⭕️';
       //TODO: ⭕️を自動で入力されるようにする
     }
 
-    // setSquares(nextSquares);
-    // setXIsNext(!xIsNext);
+    setSquares(nextSquares);
+    setXIsNext(!xIsNext);
   };
 
   //勝者を判定する
