@@ -114,13 +114,31 @@ export const Game = () => {
     setXIsNext(!xIsNext);
   };
 
+  const jumpTo = (nextMove: number) => {};
+
+  //html部でmovesを定義しているので、呼び出される
+  //historyの要素数が1以上になった場合、Go to move #1のようなボタンを表示する、1未満の場合はGo to game startを表示する
+  const moves = history.map((squares, move) => {
+    let description;
+    if (move > 0) {
+      description = 'Go to move #' + move;
+    } else {
+      description = 'Go to game start';
+    }
+    return (
+      <li>
+        <button onClick={() => jumpTo(move)}>{description}</button>
+      </li>
+    );
+  });
+
   return (
     <div className="game">
       <div className="game-board">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
       <div className="game-info">
-        <ol>{/*TODO*/}</ol>
+        <ol>{moves}</ol>
       </div>
     </div>
   );
