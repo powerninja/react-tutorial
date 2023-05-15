@@ -102,19 +102,27 @@ export const Game = () => {
   const [xIsNext, setXIsNext] = useState<boolean>(true);
   //ターンごとのマス目を配列で保存
   const [history, setHistory] = useState([Array(9).fill(null)]);
+  //何ターン目かを管理する
+  const [currentMove, setCurrentMove] = useState<number>(0);
 
   //(マス目押下後の)現状のマス目を取得
   //全てのターンのマス目を保存しているため、1ターンのマス目をuseStateを使用して保存する必要がない
-  const currentSquares = history[history.length - 1];
+  const currentSquares = history[currentMove];
 
   //過去のマス目の末尾に、最新のマス目を追加し保存する
   //プレイヤー変更を行う
   const handlePlay = (nextSquares: (string | null)[]) => {
-    setHistory([...history, nextSquares]);
+    const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
+    setHistory(nextHistory);
+    setCurrentMove(nextHistory.length - 1);
     setXIsNext(!xIsNext);
   };
 
-  const jumpTo = (nextMove: number) => {};
+  const jumpTo = (nextMove: number) => {
+    setCurrentMove(nextMove);
+    //ターン数 / 2を行い、余りがある場合false、余らない場合はtrueを返す
+    setXIsNext(nextMove % 2 === 0);
+  };
 
   //html部でmovesを定義しているので、呼び出される
   //historyの要素数が1以上になった場合、Go to move #1のようなボタンを表示する、1未満の場合はGo to game startを表示する
@@ -126,7 +134,7 @@ export const Game = () => {
       description = 'Go to game start';
     }
     return (
-      <li>
+      <li key={move}>
         <button onClick={() => jumpTo(move)}>{description}</button>
       </li>
     );
