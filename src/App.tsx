@@ -98,12 +98,12 @@ const Board = ({ xIsNext, squares, onPlay }: boardType) => {
 };
 
 export const Game = () => {
-  //ターンを管理
-  const [xIsNext, setXIsNext] = useState<boolean>(true);
   //ターンごとのマス目を配列で保存
   const [history, setHistory] = useState([Array(9).fill(null)]);
   //何ターン目かを管理する
   const [currentMove, setCurrentMove] = useState<number>(0);
+  //ターンを管理
+  const xIsNext = currentMove % 2 === 0;
 
   //(マス目押下後の)現状のマス目を取得
   //全てのターンのマス目を保存しているため、1ターンのマス目をuseStateを使用して保存する必要がない
@@ -115,13 +115,10 @@ export const Game = () => {
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
-    setXIsNext(!xIsNext);
   };
 
   const jumpTo = (nextMove: number) => {
     setCurrentMove(nextMove);
-    //ターン数 / 2を行い、余りがある場合false、余らない場合はtrueを返す
-    setXIsNext(nextMove % 2 === 0);
   };
 
   //html部でmovesを定義しているので、呼び出される
