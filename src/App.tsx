@@ -112,11 +112,13 @@ export const Game = () => {
   //過去のマス目の末尾に、最新のマス目を追加し保存する
   //プレイヤー変更を行う
   const handlePlay = (nextSquares: (string | null)[]) => {
+    //過去の盤面に戻る場合があるため、sliceにend引数も渡している
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
   };
 
+  //ターン数表示ボタン押下時、戻りたいターン数をターン数管理Stateに格納する
   const jumpTo = (nextMove: number) => {
     setCurrentMove(nextMove);
   };
